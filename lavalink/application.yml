@@ -1,0 +1,47 @@
+server:
+  port: 2333
+  address: 0.0.0.0
+lavalink:
+  plugins:
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.16.0"
+      repository: "https://maven.lavalink.dev/releases"
+  server:
+    password: "changeme"
+    sources:
+      youtube: false
+      bandcamp: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+      http: true
+      local: false
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 10
+    resamplingQuality: LOW
+    trackStuckThresholdMs: 10000
+  filters:
+    volume: true
+metrics:
+  prometheus:
+    enabled: false
+    endpoint: /metrics
+
+logging:
+  file:
+    path: ./logs/
+  level:
+    root: INFO
+    lavalink: INFO
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
+    # 複数のクライアントを偽装して再生成功率を上げる設定
+    clients:
+      - ANDROID_TESTSUITE   # 一番規制に強い設定
+      - TVHTML5EMBEDDED     # 予備として優秀
+      - ANDROID_VR          # 予備

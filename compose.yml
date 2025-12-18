@@ -1,0 +1,29 @@
+services:
+  lavalink:
+    image: ghcr.io/lavalink-devs/lavalink:latest
+    container_name: lavalink
+    restart: unless-stopped
+    environment:
+      - _JAVA_OPTIONS=-Xmx2G
+    volumes:
+      - ./lavalink/application.yml:/opt/Lavalink/application.yml
+    networks:
+      - lavalink-net
+    expose:
+      - 2333
+    ports:
+      - "2333:2333"
+  bot:
+    build: ./bot
+    container_name: music-bot
+    restart: unless-stopped
+    depends_on:
+      - lavalink
+    env_file:
+      - .env
+    networks:
+      - lavalink-net
+
+networks:
+  lavalink-net:
+    name: lavalink-net
